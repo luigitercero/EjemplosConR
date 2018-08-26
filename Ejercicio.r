@@ -106,17 +106,16 @@ media = mean(tr)
 cat("la media es:", media,"\n")
 desviacion = sd(tr)
 cat("la desviacion es:", desviacion,"\n")
-#x = 10:20
-#x
+x = 120:120
+x
 
-#par(mfrow = c(1,1))
-#plot(dnorm(x, mean = media, sd = desviacion)) #pnorm distribuci�n normal acumulada
+par(mfrow = c(1,1))
+plot(dnorm(x, mean = media, sd = desviacion)) #pnorm distribuci�n normal acumulada
 
-# min = 10
-# max = 20
-# T = 14
-# LSL = 10
-# USL = 17
+min = 100
+max = 100
+T = 104
+
 LSL = 97
 USL = 101
 
@@ -124,12 +123,12 @@ USL = 101
 z1 = (USL - media)/desviacion
 cat("z1:", z1,"\n")
 pz1 = pnorm(z1, 0,1)
-cat("la probabilidad2:", pz1,"\n")
+cat("la probabilidad 1:", pz1,"\n")
 
 z2 = (LSL - media)/desviacion
 cat("z2:", z2,"\n")
 pz2 = pnorm(z2, 0,1)
-cat("la probabilidad2:", pz2,"\n")
+cat("la probabilidad 2:", pz2,"\n")
 # % de productividad o rendimiento
 rendimiento = pz1 - pz2
 cat("rendimiento:", rendimiento,"\n")
