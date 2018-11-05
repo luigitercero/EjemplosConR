@@ -1,123 +1,79 @@
 #!/usr/bin/env Rscript
 
 tr=c(
-   99
-,99
-,95
-,98
-,100
-,100
-,98
-,98
-,100
-,99
-,103
-,99
-,98
-,98
-,95
-,98
-,100
-,98
-,99
-,99
-,100
-,96
-,100
-,98
-,105
-,98
-,100
-,98
-,99
-,100
-,95
-,98
-,100
-,100
-,100
-,97
-,99
-,98
-,102
-,100
-,100
-,101
-,105
-,100
-,95
-,99
-,100
-,99
-,98
-,95
-,99
-,99
-,97
-,100
-,100
-,102
-,105
-,99
-,97
-,100
-,99
-,98
-,100
-,101
-,98
-,99
-,96
-,99
-,99
-,103
-,101
-,100
-,100
-,98
-,98
-,99
-,98
-,103
-,99
-,98
-,105
-,98
-,99
-,97
-,105
-,100
-,97
-,98
-,100
-,100
-,99
-,98
-,98
-,100
-,99
-,98
-,98
-,98
+9
+,9
+,11
+,8
+,8
+,9
+,9
+,8
+,11
+,9
+,8
+,9
+,9
+,8
+,9
+,11
+,9
+,9
+,10
+,9
+,9
+,9
+,8
+,9
+,11
+,9
+,9
+,11
+,9
+,9
+,8
+,12
+,9
+,9
+,9
+,9
+,9
+,9
+,9
+,8
+,11
+,9
+,9
+,11
+,12
+,9
+,9
+,11
+,10
 )
-sd(tr)
+#sd(tr)
 
 media = mean(tr)
+summary(tr);
+maximiliano = max(tr) +  max(tr)*0.50
+minimiliano = min(tr) -  min(tr)*0.50
 cat("la media es:", media,"\n")
 desviacion = sd(tr)
 cat("la desviacion es:", desviacion,"\n")
-x = 120:120
+x = minimiliano:maximiliano
 x
-
-par(mfrow = c(1,1))
-plot(dnorm(x, mean = media, sd = desviacion)) #pnorm distribuci�n normal acumulada
-
 min = 100
 max = 100
-T = 104
+T =  10
 
-LSL = 97
-USL = 101
+LSL = 8
+USL = 10
+par(mfrow = c(1,1))
+grafica = dnorm(x, media,desviacion)
+#cat("esto es la grafica")
+#grafica
+
+
 
 
 z1 = (USL - media)/desviacion
@@ -132,4 +88,34 @@ cat("la probabilidad 2:", pz2,"\n")
 # % de productividad o rendimiento
 rendimiento = pz1 - pz2
 cat("rendimiento:", rendimiento,"\n")
-if(rendimiento<= 0.3085)
+cat ("el 6 sigma es de: ")
+
+if(rendimiento>= 0.99997 ){
+    cat("6:")
+} else
+if(rendimiento>= 0.9998 ){
+    cat("5")
+}else 
+if(rendimiento>= 0.993 ){
+    cat("4")
+}else
+if(rendimiento>= 0.933 ){
+    cat("3")
+}else
+if(rendimiento>= 0.6915 ){
+    cat("2")
+}else 
+if(rendimiento>= 0.3085 ){
+    cat("1")
+}else 
+if(rendimiento>= 0.068 ){
+    cat("0")
+}
+
+cat("\n")
+
+plot(x,grafica,type="l",col="red") #pnorm distribuci�n normal acumulada
+
+abline(v=LSL, col="gray",lty=1,lwd=2)
+abline(v=USL, col="gray",lty=1,lwd=3)
+abline(v=T, col="purple",lty=1,lwd=1)
