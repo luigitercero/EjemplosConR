@@ -69,7 +69,7 @@ T =  10
 LSL = 8
 USL = 10
 par(mfrow = c(1,1))
-grafica = dnorm(x, media,desviacion)
+
 #cat("esto es la grafica")
 #grafica
 
@@ -113,7 +113,7 @@ if(rendimiento>= 0.068 ){
 }
 
 cat("\n")
-
+grafica = dnorm(x, media,desviacion)
 plot(x,grafica,type="l",col="red") #pnorm distribuci�n normal acumulada
 
 abline(v=LSL, col="gray",lty=1,lwd=2)
