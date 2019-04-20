@@ -14,3 +14,13 @@ sudo apt-get install r-base
  Rscript <nombre del archivo>
 
 ````
+
+# Instalar Librerias
+* las librerias se instalan desde la terminal de R (RShell)
+````
+R
+
+````
+````
+install.packages("reshape") from an R shell.
+````
