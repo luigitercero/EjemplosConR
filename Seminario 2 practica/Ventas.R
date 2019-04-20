@@ -12,12 +12,14 @@ Country==x[5] |
 Country==x[6] |
 Country==x[7], select = c(Country,Units.Sold), drop = FALSE
 )
-vt<-aggregate(vt0$Units.Sold, by=list(Country=vt0$Country), FUN=sum)
 
+#cantidad de unidades vendidas por pais
+vt<-aggregate(vt0$Units.Sold, by=list(Country=vt0$Country), FUN=sum)
 freq_Acum <- cumsum(vt$x)
 freq_relat<- prop.table(vt$x)*100 
 Freq_relat_acum<-cumsum(freq_relat)
 tablafinal<-cbind(vt,freq_Acum,freq_relat,Freq_relat_acum )
+tablafinal
 
 library(gridExtra)
 png("test.png", height=200, width=400)
@@ -25,12 +27,11 @@ p<-tableGrob(tablafinal)
 grid.arrange(p)
 dev.off()
 
+#cantidad de veces que aparece el pais por facturacion
 vt<-aggregate(vt0$Units.Sold, by=list(Country=vt0$Country), FUN=length)
-vt
-tabla<- as.data.frame(table(vt0$Country)) #pongamos la tabla de frecuencia en formato de bd.
-freq_Acum <- cumsum(tabla$Freq) #la frecuencia acumulada
-freq_relat<- prop.table(tabla$Freq)*100 #La frecuencia relativa en porcentaje
+freq_Acum <- cumsum(vt$x) #la frecuencia acumulada
+freq_relat<- prop.table(vt$x)*100 #La frecuencia relativa en porcentaje
 Freq_relat_acum<-cumsum(freq_relat) #La frecuencia relativa acumulada
-tablafinal<-cbind(tabla,freq_Acum,freq_relat,Freq_relat_acum ) #juntamos todo
+tablafinal<-cbind(vt,freq_Acum,freq_relat,Freq_relat_acum ) #juntamos todo
 tablafinal # Allí está el resultado
 
