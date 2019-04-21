@@ -35,3 +35,9 @@ Freq_relat_acum<-cumsum(freq_relat) #La frecuencia relativa acumulada
 tablafinal<-cbind(vt,freq_Acum,freq_relat,Freq_relat_acum ) #juntamos todo
 tablafinal # Allí está el resultado
 
+library(gridExtra)
+png("test.png", height=200, width=400)
+p<-tableGrob(tablafinal)
+grid.arrange(p)
+dev.off()
+
