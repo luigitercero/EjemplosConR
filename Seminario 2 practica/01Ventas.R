@@ -41,3 +41,12 @@ p<-tableGrob(tablafinal)
 grid.arrange(p)
 dev.off()
 
+#----------------------------------------- inciso b
+legends2 <- vt[ , "Country"]
+
+barplot(tablafinal$x,col=rainbow(7), main = "Cantidad de compras", ylim = c(0,35),
+        names.arg =  legends2, las = 2)
+
+#----------------------------------------- inciso c
+plot(tablafinal$freq_Acum,col=rainbow(7), main = "Frecuencias acumuladas")
+lines(lowess(tablafinal$freq_Acum))
