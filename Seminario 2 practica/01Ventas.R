@@ -12,6 +12,7 @@ Country==x[5] |
 Country==x[6] |
 Country==x[7], select = c(Country,Units.Sold), drop = FALSE
 )
+vt0
 
 #cantidad de unidades vendidas por pais
 vt<-aggregate(vt0$Units.Sold, by=list(Country=vt0$Country), FUN=sum)

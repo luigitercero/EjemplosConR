@@ -1,52 +1,58 @@
 #!/usr/bin/env Rscript
 
 # Import the data and look at the first six rows
-ventasT <- read.csv(file = 'Practica2/Archivos Entrada Final/CSVs/DesempenioCPU.csv')
+infoT <- read.csv(file = 'Practica2/Archivos Entrada Final/CSVs/DesempenioCPU.csv')
 
-x <- c("Belize","Guatemala","El Salvador","Panama","Honduras", "Costa Rica", "Nicaragua")
-vt0 <- subset(ventasT, Country==x[1] |
-Country==x[2] |
-Country==x[3] |
-Country==x[4] |
-Country==x[5] |
-Country==x[6] |
-Country==x[7], select = c(Country,Units.Sold), drop = FALSE
+x <- c("amdahl")
+tr <- subset(infoT, Compania==x[1] , select = c(Compania,PRP,ERP), drop = FALSE
 )
 
-#cantidad de unidades vendidas por pais
-vt<-aggregate(vt0$Units.Sold, by=list(Country=vt0$Country), FUN=sum)
-freq_Acum <- cumsum(vt$x)
-freq_relat<- prop.table(vt$x)*100 
-Freq_relat_acum<-cumsum(freq_relat)
-tablafinal<-cbind(vt,freq_Acum,freq_relat,Freq_relat_acum )
-tablafinal
+tr
 
-library(gridExtra)
-png("test.png", height=200, width=400)
-p<-tableGrob(tablafinal)
-grid.arrange(p)
-dev.off()
+media = mean(tr$PRP)
+maximiliano = max(tr$PRP) 
+minimiliano = min(tr$PRP) 
+media
+maximiliano
+minimiliano
 
-#cantidad de veces que aparece el pais por facturacion
-vt<-aggregate(vt0$Units.Sold, by=list(Country=vt0$Country), FUN=length)
-freq_Acum <- cumsum(vt$x) #la frecuencia acumulada
-freq_relat<- prop.table(vt$x)*100 #La frecuencia relativa en porcentaje
-Freq_relat_acum<-cumsum(freq_relat) #La frecuencia relativa acumulada
-tablafinal<-cbind(vt,freq_Acum,freq_relat,Freq_relat_acum ) #juntamos todo
-tablafinal # Allí está el resultado
+tab <- matrix(c(media,maximiliano,minimiliano),ncol=3,byrow=TRUE)
+colnames(tab) <- c("Media","Max","Min")
+#rownames(smoke) <- c("current","former","never")
+tab <- as.table(tab)
+tab
 
-library(gridExtra)
-png("test.png", height=200, width=400)
-p<-tableGrob(tablafinal)
-grid.arrange(p)
-dev.off()
+barplot(tab,col=c("orange","blue","green"),
+        #legend.text=c("media","maximo","Minimo")
+        )
 
-#----------------------------------------- inciso b
-legends2 <- vt[ , "Country"]
 
-barplot(tablafinal$x,col=rainbow(7), main = "Cantidad de compras", ylim = c(0,35),
-        names.arg =  legends2, las = 2)
+tr<-aggregate(infoT$PRP, by=list(Compania=infoT$Compania), FUN=mean)
 
-#----------------------------------------- inciso c
-plot(tablafinal$freq_Acum,col=rainbow(7), main = "Frecuencias acumuladas")
-lines(lowess(tablafinal$freq_Acum))
+media = mean(tr$x)
+maximiliano = max(tr$x) 
+minimiliano = min(tr$x)
+desviacion = sd(tr$x) 
+
+
+
+tr0 <- subset(tr, x==maximiliano , select = c(Compania,x), drop = FALSE
+)
+#tr0
+
+tr1 <- subset(tr, x==minimiliano , select = c(Compania,x), drop = FALSE
+)
+lf0 = as.list(tr0$Compania)  
+lf1 = as.list(tr1$Compania) 
+A0<-as.character(lf0[[1]])          # get the first row
+A1<-as.character(lf1[[1]])  
+#tr1[1,]    
+
+tab <- matrix(c(media,tr0$x,tr1$x),ncol=3,byrow=TRUE)
+colnames(tab) <- c("Media", A0, A1)
+#rownames(smoke) <- c("current","former","never")
+tab <- as.table(tab)
+barplot(tab,col=c("orange","blue","green"),
+        #legend.text=c("media","maximo","Minimo")
+        )
+title(xlab="Medida",ylab ="modelos")
